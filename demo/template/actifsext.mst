@@ -1,0 +1,48 @@
+{{#features}}
+<li class="item">
+
+<style>
+    .titre {
+        color : #4C6DB3 ;
+        font-size : 30px ;
+        font-weight: bold
+    }
+    .nombre {
+        color : #74C7D2 ;
+        font-size : 50px ;
+        font-weight: bold
+    }
+    .text {
+        color : #4C6DB3 ;
+        font-size : 15px ;
+    }
+    .source {
+        color : #a2a2a2 ;
+        font-size : 11px ;
+        font-style: italic
+    }
+
+    </style>
+    
+    
+    <center>
+    
+    <br/>
+    
+	<p class="titre">{{NOM_COM_M}}</p>
+    <br/>
+	<img src="img/pictos/actifsext.png" style="width:70%;">
+    <br/>
+    <p><span class="nombre">{{Tx_ext}}%</span><br>
+	<span class="text">des actifs occupés de 15 ans et plus travaillent dans une autre commune que leur commune de résidence</span>
+    </p>
+    
+    <br/>
+    <br/>
+    
+    <p class="source">Source : Insee, 2016</p>
+    
+    </center>
+    
+</li>
+{{/features}}

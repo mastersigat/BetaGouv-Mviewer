@@ -1,0 +1,167 @@
+{{#features}}
+<li class="item">
+<br/>
+<center>
+<p class="titre">{{NOM_COM_M}}</p>
+<img src="img/pictos/actifs1.png" style="width:50%;">
+</br>
+<p><span class="nombre">{{nbactif}}</span>
+<div class="br"></div>
+<span class="text">personnes actives entre 15 et 64 ans dans la commune</span>
+</p>
+</br>
+
+<!-- Chart 1-->
+   <div class="row" style="text-align: center;">
+       <div id="idChart">
+           <canvas class="chart" id="myChart3_{{INSEE_COM}}" data-codegeo="{{INSEE_COM}}" data-mychart3-1="{{ouvriers}}" data-mychart3-2="{{retraites}}" data-mychart3-3="{{prof_inter}}" data-mychart3-4="{{sans_activ}}" data-mychart3-5="{{employes}}" data-mychart3-6="{{cadres}}" data-mychart3-7="{{artisans}}" data-mychart3-8="{{agriculteu}}" width="80" height="80"></canvas>
+       </div>       
+   </div>  
+<br/>
+<p class="source">Source : Insee, 2017</p>
+    
+</center>
+    
+   <!-- ./Chart 1-->
+ 
+</li>
+{{/features}}
+
+<style>
+
+/*** Définir la couleur de mon template - Insérer le code #HEX de votre couleur */
+:root {
+--mycolor: #1D1B35;
+}
+
+/* Texte */
+
+.titre {
+color : #4C6DB3 ;
+font-size : 30px ;
+font-weight: bold
+    }
+.nombre {
+color : #74C7D2 ;
+font-size : 50px ;
+font-weight: bold
+    }
+.text {
+color : #4C6DB3 ;
+font-size : 15px ;
+    }
+.source {
+color : #a2a2a2 ;
+font-size : 11px ;
+font-style: italic
+    }
+.subtitle-feature {
+color: var(--mycolor);
+font-family:'OpenSans-Regular', Arial, Sans-serif;
+font-size:11px;
+margin-top:7%;
+line-height:1;
+}
+
+.text-feature{
+font-family:'OpenSans-Regular', Arial, Sans-serif;
+color:#4C6DB3;
+font-size:5px;
+margin-top:5%;
+}
+
+.br {
+content: "";
+display: block;
+margin-bottom: 7px;
+}
+
+/* Chart */
+    .textChart {
+      font-family:"OpenSans-Regular";
+      font-size: 7px;
+      color:#777;
+      margin-top: 4px;
+    }
+    .title-chart{
+      font-family: "OpenSans-Regular";
+      font-size: 7px;
+    }
+
+</style>
+
+<script language="javascript"> 
+
+  /// Récupération du ID de l'entité selectionnée 
+  var c_geo = [];
+        {{#features}}
+            c_geo.push('{{INSEE_COM}}');
+        {{/features}}
+
+{{#features}}
+
+  /// CHART 1 - Création d'un doughnut
+
+  var graph_myChart3 = {};
+  graph_myChart3.getData = function () {
+    var INSEE_COM = $("#myChart3_{{INSEE_COM}}").attr("data-codegeo");
+    var data = {myChart3_attr: {labels:["Ouvriers","Retraités","Professions intermédiaires","Autres sans activités professionnelles","Employés","Cadres et professions intellectuelles supérieures","Artisans, commerçants et chefs d'entreprises","Agriculteurs exploitants"], data: {datasets:[[parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-1")),parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-2")),parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-3")),parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-4")),parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-5")),parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-6")),parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-7")),parseFloat($("#myChart3_{{INSEE_COM}}").attr("data-mychart3-8")),]]}}};
+    console.log(data);
+    graph_myChart3.drawChart(data);
+  };    
+  
+  
+  graph_myChart3.drawChart = function (data) {
+  var ctx = document.getElementById("myChart3_{{INSEE_COM}}");
+  var myChart3 = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+              labels: data.myChart3_attr.labels,
+              datasets: [{                  
+                  label: " ",
+                  data: data.myChart3_attr.data.datasets[0],
+                  backgroundColor: [
+                    "#4C6DB3",
+                    "#0094D2",                    
+                    "#74C7D2",
+                    "#00D5B2",
+                    "#8DEC89",
+                    "#F9F871",
+                    "#CA559D",
+                    "#9D61B2",
+                  ],
+                  hoverBackgroundColor: [
+                    "#4C6DB3",
+                    "#0094D2",                    
+                    "#74C7D2",
+                    "#00D5B2",
+                    "#8DEC89",
+                    "#F9F871",
+                    "#CA559D",
+                    "#9D61B2",
+                  ],
+                  borderWidth: 3 
+              }]
+          },
+          options: { 
+            responsive: true,
+            tooltips: {
+              callbacks: {
+                  label: function(tooltipItem, data) {
+                      return parseFloat(data.datasets[0].data[tooltipItem.index]).toFixed(0).toLocaleString() + " %";
+                  }
+              }
+            }
+          }
+      });
+    };
+  if  (typeof Chart === 'function') {
+    graph_myChart3.getData();
+  } else {
+      $.get('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js', function() {
+        graph_myChart3.getData();    
+      }); 
+  }      
+
+{{/features}}
+</script>

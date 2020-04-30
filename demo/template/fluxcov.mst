@@ -1,0 +1,65 @@
+{{#features}}
+<li class="item">
+
+<style>
+    .titre {
+        color : #4C6DB3 ;
+        font-size : 20px ;
+        font-weight: bold
+    }
+    
+    .titre1 {
+        color : #74C7D2 ;
+        font-size : 30px ;
+        font-weight: extrabold
+    }
+    
+    .nombre {
+        color : #74C7D2 ;
+        font-size : 30px ;
+        font-weight: bold
+    }
+    .text {
+        color : #4C6DB3 ;
+        font-size : 15px ;
+    }
+    
+    .source {
+        color : #a2a2a2 ;
+        font-size : 11px ;
+        font-style: italic
+    }
+
+    </style>
+    
+    
+    <center>
+    
+    <br/>
+    <img src="img/pictos/fluxreg.png" style="width:80%;">
+    <br/>
+    
+    <p><span class="titre">Sens : {{2_NOM_COM_}}</span><span class="titre1"> - </span><span class="titre">{{CNOM_COM_M}}</span></p>
+    
+    <p><span class="nombre">{{NB_TRAJE_1}}</span><span class="text"> trajets de covoiturage courte-distance</span>
+    </p>
+    
+    <br/>
+
+    <hr>
+	
+    <p><span class="titre">Sens : {{CNOM_COM_M}}</span><span class="titre1"> - </span><span class="titre">{{2_NOM_COM_}}</span></p>
+    
+    <p><span class="nombre">{{NB_TRAJETS}}</span><span class="text"> trajets de covoiturage courte-distance</span>
+    </p>
+    
+    <br/>
+    <br/>
+    
+    <p class="source">Source : Registre de preuve de covoiturage, 2019-2020</p>
+    
+    </center>
+    
+</li>
+
+{{/features}}

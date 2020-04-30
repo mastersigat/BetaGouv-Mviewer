@@ -1,0 +1,59 @@
+{{#features}}
+<li class="item">
+
+<style>
+    .titre {
+         color : #4C6DB3 ;
+        font-size : 20px ;
+        font-weight: bold
+    }
+    .titre1 {
+        color : #74C7D2 ;
+        font-size : 30px ;
+        font-weight: extrabold
+    }
+    .nombre {
+        color : #74C7D2 ;
+        font-size : 30px ;
+        font-weight: bold
+    }
+    .text {
+        color : #4C6DB3 ;
+        font-size : 15px ;
+    }
+    .source {
+        color : #a2a2a2 ;
+        font-size : 11px ;
+        font-style: italic
+    }
+
+    </style>
+    
+    
+    <center>
+    
+    <br>
+	<img src="img/pictos/fluxdt.png" style="width:75%;">
+    <br>
+    
+    <p><span class="titre">Sens : {{1NOM_COM_M}}</span><span class="titre1"> - </span><span class="titre">{{2_NOM_COM_}}</span></p>
+    
+    <p><span class="nombre">{{NBFLUX_C16}}</span><span class="text"> trajets domicile-travail</span><br>
+    </p>
+    
+    <hr>
+	
+    <p><span class="titre">Sens : {{2_NOM_COM_}}</span><span class="titre1"> - </span><span class="titre">{{1NOM_COM_M}}</span></p>
+    
+    <p><span class="nombre">{{nb2}}</span><span class="text"> trajets domicile-travail</span><br>
+    </p>
+    
+    <p class="source">
+    <br>
+    <br>
+    Source : Insee, 2016
+    </p>
+    </center>
+    
+</li>
+{{/features}}

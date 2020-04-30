@@ -1,0 +1,153 @@
+{{#features}}
+<li class="item">
+<br/>
+<center>
+<p class="titre">{{NOM_C}}</p>
+<img src="img/pictos/voituresolo.png" style="width:40%;">
+</br>
+<p><span class="nombre">{{U_V_O_OK}}%</span></p>
+<p><span class="text">des ménages possèdent <span class="br"> </span> au moins une voiture</span>
+</p>
+</br>
+
+<!-- Chart 1-->
+   <div class="row" style="text-align: center;">
+       <div id="idChart">
+           <canvas class="chart" id="myChart1_{{INSEE_C}}" data-codegeo="{{INSEE_C}}" data-mychart1-1="{{UNE_V}}" data-mychart1-2="{{D_V_O}}" width="80" height="60"></canvas>
+       </div>       
+   </div>  
+<br/>
+<p class="source">Source : Insee, 2016</p>
+    
+</center>
+    
+   <!-- ./Chart 1-->
+ 
+</li>
+{{/features}}
+
+<style>
+
+/*** Définir la couleur de mon template - Insérer le code #HEX de votre couleur */
+:root {
+--mycolor: #1D1B35;
+}
+
+/* Texte */
+
+.titre {
+color : #4C6DB3 ;
+font-size : 30px ;
+font-weight: bold
+    }
+.nombre {
+color : #74C7D2 ;
+font-size : 40px ;
+font-weight: bold
+    }
+.text {
+color : #4C6DB3 ;
+font-size : 15px ;
+    }
+.source {
+color : #a2a2a2 ;
+font-size : 11px ;
+font-style: italic
+    }
+.subtitle-feature {
+color: var(--mycolor);
+font-family:'roboto_regular', Arial, Sans-serif;
+font-size:18px;
+margin-top:7%;
+line-height:1;
+}
+
+.text-feature{
+font-family:'roboto_regular', Arial, Sans-serif;
+color:#555;
+font-size:12px;
+margin-top:5%;
+}
+
+.br {
+content: "";
+display: block;
+margin-bottom: 7px;
+}
+
+/* Chart */
+    .textChart {
+      font-family:"OpenSans-Regular";
+      font-size: 11px;
+      color:#777;
+      margin-top: 4px;
+    }
+    .title-chart{
+      font-family: "OpenSans-Regular";
+    }
+
+</style>
+
+<script language="javascript"> 
+
+  /// Récupération du ID de l'entité selectionnée 
+  var c_geo = [];
+        {{#features}}
+            c_geo.push('{{INSEE_C}}');
+        {{/features}}
+
+{{#features}}
+
+  /// CHART 1 - Création d'un doughnut
+
+  var graph_myChart1 = {};
+  graph_myChart1.getData = function () {
+    var INSEE_C = $("#myChart1_{{INSEE_C}}").attr("data-codegeo");
+    var data = {myChart1_attr: {labels:["Une voiture par ménage","Deux voitures ou plus par ménage"], data: {datasets:[[parseFloat($("#myChart1_{{INSEE_C}}").attr("data-mychart1-1")),parseFloat($("#myChart1_{{INSEE_C}}").attr("data-mychart1-2"))]]}}};
+    console.log(data);
+    graph_myChart1.drawChart(data);
+  };    
+  
+  
+  graph_myChart1.drawChart = function (data) {
+  var ctx = document.getElementById("myChart1_{{INSEE_C}}");
+  var myChart1 = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+              labels: data.myChart1_attr.labels,
+              datasets: [{                  
+                  label: " ",
+                  data: data.myChart1_attr.data.datasets[0],
+                  backgroundColor: [
+                    "#4C6DB3",                    
+                    "#74C7D2",
+                  ],
+                  hoverBackgroundColor: [
+                    "#4C6DB3",                    
+                    "#74C7D2",
+                  ],
+                  borderWidth: 3 
+              }]
+          },
+          options: { 
+            responsive: true,
+            tooltips: {
+              callbacks: {
+                  label: function(tooltipItem, data) {
+                      return parseFloat(data.datasets[0].data[tooltipItem.index]).toFixed(0).toLocaleString() + " %";
+                  }
+              }
+            }
+          }
+      });
+    };
+  if  (typeof Chart === 'function') {
+    graph_myChart1.getData();
+  } else {
+      $.get('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js', function() {
+        graph_myChart1.getData();    
+      }); 
+  }      
+
+{{/features}}
+</script>

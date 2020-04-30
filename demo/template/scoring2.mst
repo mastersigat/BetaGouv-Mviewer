@@ -1,0 +1,153 @@
+{{#features}}
+<li class="item">
+
+    <style>
+    .nombre {
+         color : #74C7D2 ;
+        font-size : 20px ;
+        font-weight: bold
+    }
+    .text {
+        color : #4C6DB3 ;
+        font-size : 14px ;
+    }
+    .titre {
+         color : #4C6DB3 ;
+        font-size : 30px ;
+        font-weight: bold
+    }
+    .soustitre {
+        color : #a2a2a2 ;
+        font-size : 10px ;
+        font-weight : lighter
+    }
+    .soustitre2 {
+        color : #a2a2a2 ;
+        font-size : 15px ;
+        font-weight : bold
+    }
+    .source {
+        color : #a2a2a2 ;
+        font-size : 9px ;
+        font-style: italic
+    }
+    .left { 
+        width:20%;
+        float:left; 
+        margin:3px 20px 0 10px; 
+    }
+    .br1 {
+        content: "";
+        display: block;
+        margin-bottom: 10%;
+    }
+
+    </style>
+   
+    <center>
+    
+    <br>
+    
+    <p>
+    <span class="titre">Maille n°{{id}}</span>
+    </p>
+    
+    <p><span class="nombre">{{NOM_COM}}</span>
+    </p>
+    
+    <div class="br1">
+    </div>
+    
+    <img src="img/pictos/implantation.png" style="width:40%;">
+    
+    <p>
+    <div class="br1">
+    </div>
+    <span class="text">Score :</span><span class="nombre"> {{POTENTIEL}}</span>
+    </p>
+    
+    <hr>
+    
+    <span class="soustitre2">Détail du scoring :</span>
+    
+    </center>
+    
+    <div class="br1">
+    </div>
+    
+    <div>
+    <img src="img/pictos/route_princ.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="text">Proximité à une route principale :</span><span class="nombre">  {{R_PRIN}}</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : Très fort</span>
+    <div class="br1">
+    </div>
+    </div>
+    
+    <div>
+    <img src="img/pictos/route_sec.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="text">Proximité à une route secondaire :</span><span class="nombre">  {{R_SEC}}</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : Moyen</span>
+    <div class="br1">
+    </div>
+    </div>
+    
+    <div>
+    <img src="img/pictos/dep_axe.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{NB_FLUX}} </span><span class="text">déplacements sur la route</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : Fort</span>
+    <div class="br1">
+    </div>
+    </div>
+    
+    <div>
+    <img src="img/pictos/pole.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{INTER_MOD}} </span><span class="text">pôle(s) d'intermodalité à proximité</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : Faible</span>
+    <div class="br1">
+    </div>
+    </div>
+    
+    <center>
+    
+    <p><span class="soustitre2">Critères d'exclusion :</span></p>
+    <div class="br1">
+    </div>
+    
+    </center>
+    
+    <div>
+    <img src="img/pictos/prox_aires.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{COV_5KM}} </span><span class="text">aire(s) de covoiturage à proximité</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : Moyen</span>
+    <div class="br1">
+    </div>
+    </div>
+    
+    <div>
+    <img src="img/pictos/bati.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{TX_BATI}}% </span><span class="text">de zone bâtie sur la maille</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : Faible</span>
+    <div class="br1">
+    </div>
+    </div>
+    
+    <center>
+   
+    <p><span class="source">Sources : IGN, Insee, GéoBretagne, Région Bretagne</span></p>
+    
+    </center>
+    
+</li>
+{{/features}}

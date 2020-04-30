@@ -1,0 +1,48 @@
+{{#features}}
+<li class="item">
+
+<style>
+    .titre {
+         color : #4C6DB3 ;
+        font-size : 30px ;
+        font-weight: bold
+    }
+    .nombre {
+        color : #74C7D2 ;
+        font-size : 50px ;
+        font-weight: bold
+    }
+    .text {
+        color : #4C6DB3 ;
+        font-size : 15px ;
+    }
+    .source {
+        color : #a2a2a2 ;
+        font-size : 11px ;
+        font-style: italic
+    }
+
+    </style>
+    
+    
+    <center>
+    
+    <br/>
+    
+	<p class="titre">Route {{route}}</p>
+	<img src="img/pictos/bouchon.png" style="width:40%;">
+    <br/>
+    <p><span class="nombre">{{nb_OK}}</span>
+    <br/>
+	<span class="text">voitures sur ce tronçon</span>
+    </p>
+    
+    <br/>
+    <br/>
+    
+    <p class="source">Source : GéoBretagne, 2017</p>
+    
+    </center>
+    
+</li>
+{{/features}}

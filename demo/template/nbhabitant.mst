@@ -1,0 +1,168 @@
+{{#features}}
+<li class="item">
+<br/>
+<center>
+<p class="titre">{{NOM_COM_M}}</p>
+<img src="img/pictos/habitant.png" style="width:50%;">
+</br>
+<p><span class="nombre">{{population}}</span></p>
+<p><span class="text">habitants dans la commune</span>
+</p>
+</br>
+
+<!-- Chart 1-->
+   <div class="row" style="text-align: center;">
+       <div id="idChart" class="marge" >
+           <canvas class="chart" id="myChart2_{{INSEE_COM}}" data-codegeo="{{INSEE_COM}}" data-mychart2-1="{{2008}}" data-mychart2-2="{{2011}}" data-mychart2-3="{{2014}}" data-mychart2-4="{{2017}}" width="20" height="15"></canvas>
+       </div>       
+   </div>  
+<br/>
+<p class="source">Source : Insee, 2017</p>
+    
+</center>
+    
+   <!-- ./Chart 1-->
+ 
+</li>
+{{/features}}
+
+<style>
+
+/*** Définir la couleur de mon template - Insérer le code #HEX de votre couleur */
+:root {
+--mycolor: #1D1B35;
+}
+
+/* Texte */
+
+.titre {
+color : #4C6DB3 ;
+font-size : 30px ;
+font-weight: bold
+    }
+.nombre {
+color : #74C7D2 ;
+font-size : 40px ;
+font-weight: bold
+    }
+.text {
+color : #4C6DB3 ;
+font-size : 15px ;
+    }
+.source {
+color : #a2a2a2 ;
+font-size : 11px ;
+font-style: italic
+    }
+.subtitle-feature {
+color: var(--mycolor);
+font-family:'roboto_regular', Arial, Sans-serif;
+font-size:18px;
+margin-top:7%;
+line-height:1;
+}
+
+.text-feature{
+font-family:'roboto_regular', Arial, Sans-serif;
+color:#555;
+font-size:12px;
+margin-top:5%;
+}
+
+.br {
+content: "";
+display: block;
+margin-bottom: 7px;
+}
+
+.marge {
+margin: 2px 2px 2px 20px;
+}
+
+/* Chart */
+    .textChart {
+      font-family:"OpenSans-Regular";
+      font-size: 11px;
+      color:#777;
+      margin-top: 4px;
+    }
+    .title-chart{
+      font-family: "OpenSans-Regular";
+    }
+
+</style>
+
+<script language="javascript"> 
+
+  /// Récupération du ID de l'entité selectionnée 
+  var c_geo = [];
+        {{#features}}
+            c_geo.push('{{INSEE_COM}}');
+        {{/features}}
+
+{{#features}}
+
+  /// CHART 1 - Création d'un doughnut
+
+  var graph_myChart2 = {};
+  graph_myChart2.getData = function () {
+    var INSEE_COM = $("#myChart2_{{INSEE_COM}}").attr("data-codegeo");
+    var data = {myChart2_attr: {labels:["2008","2011","2014","2017"], data: {datasets:[[parseFloat($("#myChart2_{{INSEE_COM}}").attr("data-mychart2-1")),parseFloat($("#myChart2_{{INSEE_COM}}").attr("data-mychart2-2")),parseFloat($("#myChart2_{{INSEE_COM}}").attr("data-mychart2-3")),parseFloat($("#myChart2_{{INSEE_COM}}").attr("data-mychart2-4"))]]}}};
+    console.log(data);
+    graph_myChart2.drawChart(data);
+  };    
+  
+  
+  graph_myChart2.drawChart = function (data) {
+  var ctx = document.getElementById("myChart2_{{INSEE_COM}}");
+  var myChart1 = new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: data.myChart2_attr.labels,
+              datasets: [{   
+                  label: "Nombre d'habitants",
+                  data: data.myChart2_attr.data.datasets[0],
+                  backgroundColor: [
+                    "#4C6DB3",                    
+                    "#4C6DB3",
+                    "#4C6DB3",
+                    "#4C6DB3",
+                  ],
+                  hoverBackgroundColor: [
+                    "#4C6DB3",                    
+                    "#4C6DB3",
+                    "#4C6DB3",
+                    "#4C6DB3",
+                  ],
+                  borderWidth: 3 
+              }]
+          },
+          options: {        
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                            }
+                        }]
+                    },
+            tooltips: {
+              callbacks: {
+                  label: function(tooltipItem, data) {
+                      return parseFloat(data.datasets[0].data[tooltipItem.index]).toFixed(0).toLocaleString() + " habitants";
+                  }
+              }
+            }
+          }
+      });
+    };
+  if  (typeof Chart === 'function') {
+    graph_myChart2.getData();
+  } else {
+      $.get('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js', function() {
+        graph_myChart2.getData();    
+      }); 
+  }      
+
+{{/features}}
+</script>

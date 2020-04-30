@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<application
+    title="Visualiseur du covoiturage courte-distance"
+    logo="img/panneau/registre.png"
+    help="demo/panneau.html"
+    titlehelp=" "
+    iconhelp="cog"
+    style="css/themes/style_covoiturage.css"
+    exportpng="true"
+    showhelp="true"
+    coordinates="false"
+    mouseposition="false"
+    measuretools="true"
+    templaterightinfopanel="accordion"
+    togglealllayersfromtheme="false">
+</application>
+#ZOOM ET COORDONNEES
+<mapoptions maxzoom="20" projection="EPSG:3857" center="-120000.74898791354,6150000.088741366" zoom="9" />
+<searchparameters bbox="false" localities="false" features="false" static="false"/>
+
+#FOND DE CARTES
+<baselayers style="gallery"> 
+<baselayer visible="true" id="positron" thumbgallery="img/basemap/positron.png" title="CartoDb" label="Positron" type="OSM" url="https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" attribution="Map tiles by  &lt;a href=&quot;https://cartodb.com/attributions&quot;&gt;CartoDb&lt;/a&gt;, under  &lt;a href=&quot;https://creativecommons.org/licenses/by/3.0/&quot;&gt;CC BY 3.0 &lt;/a&gt; and thanks to &lt;a href='http://www.openstreetmap.org/' target='_blank' OpenStreetMap &lt;/a>&lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap contributors &lt;/a>"  ></baselayer> 
+    <baselayer visible="false" id="esriworldimagery" thumbgallery="img/basemap/esriworldwide.jpg" title="Esri world imagery" label="Esri world imagery" type="OSM" url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" attribution="Esri world imagery"  ></baselayer>
+<baselayer  type="WMS" id="osm" label="OpenStreetMap" title="Plan OSM Géobretagne" thumbgallery="img/basemap/osm.png" 
+            url="http://osm.geobretagne.fr/gwc01/service/wms" layers="osm:google" format="image/png" visible="false" 
+            attribution="GéoBretagne. Données : les contributeurs d'&lt;a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap &lt;/a>,  &lt;a href='http://www.openstreetmap.org/copyright' target='_blank'>ODbL &lt;/a>" />	
+</baselayers>
+#OUTIL DE RECHERCHE
+<searchparameters bbox="false" localities="true" features="true" static="false"/>
+<olscompletion url="http://api-adresse.data.gouv.fr/search/" type="ban" attribution="La recherche d'adresse est un service proposé par l'API adresse.data.gouv.fr"/>
+
+<themes mini="false">
+	<theme id="theme-1" name="Découpages territoriaux" collapsed="false" icon="fa fa-map-marker">
+		#couche des communes
+        <layer id="communes"
+                name="Communes"
+                type="customlayer"
+                visible="true"
+				legendurl="img/legend/leg_com.png"
+                url="customlayers/communes.js"
+                metadata="https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html"
+                queryable="false"
+                fields="NOM_COM,POPULATION"
+                aliases="Commune,Population"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM"
+                fusesearchresult="{{NOM_COM}}"
+                tooltipcontent="{{NOM_COM}}"
+                attribution="IGN 2020"/>
+                
+        #couche des epci
+        <layer id="epci"
+                name="EPCI"
+                type="customlayer"
+                visible="false"
+				legendurl="img/legend/leg_epci.png"
+                url="customlayers/epci.js"
+                metadata="https://geoservices.ign.fr/documentation/diffusion/telechargement-donnees-libres.html"
+                queryable="false"
+                fields="NOM_EPCI"
+                aliases="EPCI"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_EPCI"
+                fusesearchresult="{{NOM_EPCI}}"
+                tooltipcontent="{{NOM_EPCI}}"
+                attribution="IGN 2020"/>
+    </theme>
+
+    <theme id="theme-2" name="Le territoire" icon="fa fa-globe">
+		<group id="grp1" name="Zones résidentielles" >
+		#Nombre d'habitant par commune
+        <layer id="nbhabitantcom"
+				name="Nombre d'habitants par commune"
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_habitant.png"
+				url="customlayers/nbhabitant.js"
+				metadata="https://www.insee.fr/fr/information/2008354"
+				queryable="true"
+				fields="NOM_COM_M,population"
+                aliases="Commune,population" 
+				nohighlight="false"  
+                expanded="true"
+				searchable="true"
+				searchengine="fuse"
+				fusesearchkeys="NOM_COM_M"
+				fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+				attribution="Insee 2017" >
+				<template url="demo/template/nbhabitant.mst"/>
+				</layer>
+		#Nombre de personnes active par commune
+        <layer id="nbperact"
+				name="Nombre de personnes actives"
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_pers_active.png"
+				url="customlayers/nbactif.js"
+				metadata="https://insee.fr"
+				queryable="true"
+				fields="NOM_COM_M,nbactif"
+                aliases="Commune,Actifs" 
+				nohighlight="false"  
+                expanded="true"
+				searchable="true"
+				searchengine="fuse"
+				fusesearchkeys="NOM_COM_M"
+				fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+				attribution="Insee 2017" >
+				<template url="demo/template/nbactif.mst"/>
+				</layer>
+		#couche des actifs travaillant à l'extérieur
+        <layer id="actifs"
+                name="Actifs travaillant à l'extérieur de leurs communes de résidence"
+                type="customlayer"
+                visible="false"
+				legendurl="img/legend/leg_actifs_ext.png"
+                url="customlayers/actifs.js"
+                metadata="https://insee.fr"
+                queryable="true"
+                fields="NOM_COM_M,Tx_ext"
+                aliases="Commune,Taux"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM_M"
+                fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+                attribution="Insee 2016">
+				<template url="demo/template/actifsext.mst"/>
+				</layer>
+        </group>
+        <group id="grp2" name="Déplacement domicile-travail" >
+        #couche des flux domicile-travail					
+		<layer id="fluxdt"
+                name="Flux de déplacements domicile-travail"
+                type="customlayer"
+                visible="false" 
+				legendurl="img/legend/leg_flux_tra_insee.png"
+                url="customlayers/fluxdt.js"
+                metadata="https://www.insee.fr/fr/statistiques/4171469"
+                queryable="true"
+                fields="1NOM_COM_M,2_NOM_COM_,Total"
+                aliases="Commune d'origine,Commune de destination,Nombre de trajets"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="Total"
+                fusesearchresult="{{Total}}"
+                tooltipcontent="{{1NOM_COM_M}}-{{2_NOM_COM_}}"
+                attribution="Insee 2014">
+				<template url="demo/template/fluxdt.mst"/>
+				</layer>
+        #couche distance médiane des trajets domicile-travail (en km) 
+        <layer id="eloignement"
+                name="Distance médiane des trajets domicile-travail"
+                type="customlayer"
+                visible="false" 
+				legendurl="img/legend/leg_distancedomtra.png"
+                url="customlayers/eloignement.js"
+                metadata="https://www.insee.fr"
+                queryable="true"
+                fields="NOM_COM_M,Eloig_moy"
+                aliases="Commune,Eloignement"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM_M"
+                fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+                attribution="Insee 2014">
+				<template url="demo/template/eloignement.mst"/>
+				</layer>
+        </group>
+        <group id="grp3" name="Zones d'emplois" >
+        #couche du nombre d'entreprises
+		<layer id="entreprise" 
+                name="Nombre d'entreprises" 
+                type="customlayer"
+                visible="false" 
+                legendurl="img/legend/leg_nb_entre.png"
+                url="customlayers/entreprises.js"
+                metadata="https://www.insee.fr/fr/statistiques/3973001"
+                queryable="true"
+                fields="NOM_COM_M,Nbre_entr"
+                aliases="Nom,Nombre"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM_M"
+                fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+                attribution="Insee 2017">
+                <template url="demo/template/entreprises.mst"/>
+                </layer>
+        #couche du taux d'emplois 20-64 ans
+        <layer id="tauxemplois" 
+                name="Taux d'emplois des 20-64 ans" 
+                type="customlayer"
+                visible="false" 
+                legendurl="img/legend/leg_txemplois.png"
+                url="customlayers/tauxemplois.js"
+                metadata="https://www.insee.fr"
+                queryable="true"
+                fields="NOM_COM_M,Tx_emplois"
+                aliases="Nom,Taux d'emplois"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM_M"
+                fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+                attribution="Insee 2016">
+                <template url="demo/template/tauxemplois.mst"/>
+                </layer>
+        </group>	
+    </theme>
+    
+	<theme id="theme-3" name="La mobilité" icon="fa fa-car">
+		<group id="grp4" name="L'usage de la voiture" >        
+        #couche part déplacements domicile-travail en voiture
+        <layer id="dtvoiture"
+				name="Part des déplacements domicile-travail en voiture"
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/par_dep_voit.png"
+				url="customlayers/dtvoiture.js"
+				metadata="https://insee.fr"
+				queryable="true"
+				fields="NOM_COM_M,ddtvv"
+                aliases="Commune,Part"
+				nohighlight="false"
+                expanded="true"
+				searchable="true"
+				searchengine="fuse"
+				fusesearchkeys="NOM_COM_M"
+				fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+				attribution="Insee 2016">
+                <template url="demo/template/dtvoiture.mst"/>
+                </layer>
+        #couche taux de motorisation
+        <layer id="motorisation"
+				name="Taux de motorisation"
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_motor.png"
+				url="customlayers/motorisation.js"
+				metadata="https://insee.fr"
+				queryable="true"
+				fields="NOM_C,U_V_O"
+                aliases="Commune,Taux"
+				nohighlight="false"
+                expanded="true"
+				searchable="true"
+				searchengine="fuse"
+				fusesearchkeys="NOM_C"
+				fusesearchresult="{{NOM_C}}"
+                tooltipcontent="{{NOM_C}}"
+				attribution="Insee 2016">
+                <template url="demo/template/motorisation.mst"/>
+        </layer>
+        </group>
+		<group id="grp5" name="L'offre de transport en commun" >  
+		#couche station de transport en commun
+        <layer id="stationstc"
+				name="Stations de transports en commun" 
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_cluster_tc.png"
+                url="customlayers/stationstc.js"
+				metadata="https://www.data.gouv.fr/fr/datasets/base-de-donnees-multimodale-transports-publics-en-bretagne-mobibreizh"
+				queryable="true"
+                fields="NOM_COM_M,stop_name"
+                aliases="nom,station"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM_M"
+                fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"          
+				attribution="Région Bretagne 2020" >
+                <template url="demo/template/stationstc.mst"/>
+                </layer>		
+        #couche nb de stations de TC
+        <layer id="nbstattc"
+				name="Nombre de stations de transports en commun"
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_nb_tc.png"
+				url="customlayers/nbstations.js"
+				metadata="https://www.data.gouv.fr/fr/datasets/base-de-donnees-multimodale-transports-publics-en-bretagne-mobibreizh"
+				queryable="true"
+				fields="NOM_COM_M,nbsta"
+                aliases="Commune,Nombre de stations" 
+				nohighlight="false"  
+                expanded="true"
+				searchable="true"
+				searchengine="fuse"
+				fusesearchkeys="NOM_COM_M"
+				fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+				attribution="Région Bretagne 2020">
+                <template url="demo/template/nbstations.mst"/>
+                </layer>
+                
+        #couche taux de déplacements en TC
+        <layer id="dttc"
+				name="Part des déplacements domicile-travail en transports en commun"
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_pa_tc.png"                
+				url="customlayers/dttc.js"
+				metadata="https://insee.fr"
+				queryable="true"
+				fields="NOM_COM_M,ddttc"
+                aliases="Commune,Part"
+				nohighlight="false"
+                expanded="true"
+				searchable="true"
+				searchengine="fuse"
+				fusesearchkeys="NOM_COM_M"
+				fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+				attribution="Insee 2016">
+                <template url="demo/template/dttc.mst"/>
+                </layer>
+        </group>
+		<group id="grp6" name="La pratique du covoiturage" >        
+        #couche nb d'aires de covoit (par commune)
+        <layer id="airescov"
+				name="Aires de covoiturage" 
+				type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_cluster_aire.png"
+                url="customlayers/airescov.js"
+				metadata="https://geobretagne.fr/"
+				queryable="true"
+                fields="nom,commune,places,pmr,statut"
+                aliases="Nom,Commune,Places,PMR,Statut"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="nom"
+                fusesearchresult="{{nom}}"
+                tooltipcontent="{{nom}}"          
+				attribution="GéoBretagne 2018" >
+                <template url="demo/template/airescov.mst"/>
+                </layer>
+                
+        #couche part départ en covoiturage (sur 3 mois)
+        <layer id="covdepart"
+				name="Part des départs en covoiturage du département"
+				type="customlayer"
+                visible="false"
+				legendurl="img/legend/leg_reg_pour_cov.png"
+				url="customlayers/covdepart.js"
+				metadata="http://covoiturage.beta.gouv.fr"
+				queryable="true"
+				fields="NOM_COM_M,ddttc"
+                aliases="Commune,Part"
+				nohighlight="false"
+                expanded="true"
+				searchable="true"
+				searchengine="fuse"
+				fusesearchkeys="NOM_COM_M"
+				fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+				attribution="Registre de preuve de covoiturage de novembre 2019 à février 2020">
+                <template url="demo/template/covdepart.mst"/>
+                </layer>
+                
+        #couche flux registre
+		<layer id="fluxcov"
+				name="Flux de covoiturages du département"
+				type="customlayer"
+                visible="false"
+				legendurl="img/legend/leg_reg_cov_flux.png"
+				url="customlayers/fluxcov.js"
+				metadata="http://covoiturage.beta.gouv.fr"
+                queryable="true"
+                fields="2_NOM_COM_,CNOM_COM_M,NB_TRAJE_1,NB_TRAJETS"
+                aliases="Commune 1,Commune 2,Trajets 1, Trajets 2"
+				nohighlight="false"
+                expanded="true"                
+				searchable="true"
+				searchengine="fuse"
+                fusesearchkeys=""
+				fusesearchresult=""
+                tooltipcontent="{{2_NOM_COM_}} - {{CNOM_COM_M}}"
+				attribution="Registre de preuve de covoiturage de novembre 2019 à février 2020">
+                <template url="demo/template/fluxcov.mst"/>
+                </layer>
+        </group>
+    </theme>
+    
+	<theme id="theme-4" name="Enjeux de la mobilité" icon="fa fa-bullseye">
+		<group id="grp7" name="Améliorer le trafic routier">        
+        #couche du trafic
+		<layer id="trafic"
+                name="Congestion du trafic routier"
+                type="customlayer"
+                visible="false"
+                legendurl="img/legend/leg_trafic.png"
+                url="customlayers/trafic.js"
+                metadata="https://geobretagne.fr/geonetwork/srv/fre/catalog.search#/metadata/cfba2f15-a114-4580-84de-fa5fc1fb0b3b"
+                queryable="true"
+                fields="cei,route,nb_OK"
+                aliases="Commune,Route,Nombre de voitures"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="Commune"
+                fusesearchresult="{{cei}}"
+				tooltipcontent="{{cei}} - Route : {{route}}"
+                attribution="GéoBretagne 2019">
+                <template url="demo/template/trafic.mst"/>
+                </layer>
+        </group>
+		<group id="grp8" name="Améliorer la qualité de l'environnement" >        
+        #couche des emissions de co2
+		<layer id="pollution" 
+                name="Emissions de polluants" 
+                type="customlayer"
+                visible="false"                 
+                legendurl="img/legend/leg_emis.png"
+                url="customlayers/pollution.js"
+                metadata="http://emissions-air.developpement-durable.gouv.fr/indexMap.html"
+                queryable="true"
+                fields="NOM_COM_M,emissionco"
+                aliases="Nom,Emissions de co2"
+                nohighlight="false"  
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM_M"
+                fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+                attribution="Inventaire National Spatialisé 2012">
+                <template url="demo/template/pollution.mst"/>
+                </layer>
+        </group>
+    </theme>
+    
+	<theme id="theme-5" name="Développer le covoiturage" icon="fa fa-flask">       
+		#couche scoring 1
+		<layer id="scoring1"
+                name="Où promouvoir le covoiturage ?"
+                type="customlayer"
+                visible="false" 
+                legendurl="img/legend/leg_sco1.png"
+                url="customlayers/scoring1.js"
+                metadata="https://docs.google.com/presentation/d/1ICezyL-UGj9VRBSwOGEDgeLewwIZwvZhZqV2sMZYV0o/edit?usp=sharing"
+                queryable="true"
+                fields="NOM_COM_M,catego"
+                aliases="Commune,Score"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM_M"
+                fusesearchresult="{{NOM_COM_M}}"
+                tooltipcontent="{{NOM_COM_M}}"
+                attribution="Sources du scoring" >
+                <template url="demo/template/scoring1.mst"/>
+                </layer>     
+		#couche scoring 2	 
+		<layer id="scoring2"
+                name="Où aménager de nouvelles aires de covoiturage ?"
+                type="customlayer"
+                visible="false"  
+                legendurl="img/legend/leg_sco2.png"
+                url="customlayers/scoring2.js"
+                metadata="https://docs.google.com/presentation/d/1ICezyL-UGj9VRBSwOGEDgeLewwIZwvZhZqV2sMZYV0o/edit?usp=sharing"
+                queryable="true"
+                fields="POTENTIEL,NOM_COM"
+                aliases="Potentiel d'implantation d'une aire de covoiturage,Commune"
+                nohighlight="false"
+                expanded="true"
+                searchable="true"
+                searchengine="fuse"
+                fusesearchkeys="NOM_COM"
+                fusesearchresult="{{NOM_COM}}"
+                tooltipcontent="{{NOM_COM}}"
+                attribution="Sources du scoring">
+                <template url="demo/template/scoring2.mst"/>
+                </layer>
+    </theme>        
+				<!-- 
+                id = identifiant dans le js
+				name = nom qui apparait dans le mviewer
+				type = dans le dossier customlayer
+                visible = si la couche est visible quand on ouvre l'application
+				legendurl = image de la légende
+				url = lien vers la donnée (customlayer pour nous)
+				metadata = url de la source
+				queryable = interrogeable (ouverture de la fenetre de droite au clic ou non)
+				fields = champs de la table que l'on veut afficher
+				aliases = comment on renomme les champs
+                nohighlight = surligne les entités au survol avec la souris (activée quand false)
+                expanded = si la légende est étendue ou non (si oui cela laisse apparaitre le curseur d'opacité et la source)
+				searchable = si le champs est recherchable
+				searchengine = type de recherche
+                fusesearchkeys = champ de recherche
+                fusesearchresult = sortie de la recherche
+                tooltipcontent = contenu de la pop-up au survol de l'entité avec la souris
+                attribution = nom de la source
+				<template url/> = lien vers le mst (dataviz, fenêtre de droite)
+                -->
+</themes>
+</config>
+

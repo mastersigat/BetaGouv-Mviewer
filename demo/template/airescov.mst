@@ -1,0 +1,51 @@
+{{#features}}
+<li class="item">
+
+<style>
+    .titre {
+         color : #4C6DB3 ;
+        font-size : 30px ;
+        font-weight: bold
+    }
+    .nombre {
+        color : #74C7D2 ;
+        font-size : 20px ;
+        font-weight: bold
+    }
+    .text {
+        color : #4C6DB3 ;
+        font-size : 15px ;
+    }
+    .source {
+        color : #a2a2a2 ;
+        font-size : 11px ;
+        font-style: italic
+    }
+
+    </style>
+    
+    
+    <center>
+    
+    <br/>
+    
+	<p class="titre">{{nom}} ({{commune}})</p>
+	<img src="img/pictos/aires.png" style="width:40%;">
+    <br/>
+    <br/>
+       <span class="text">Nombre de places :</span><span class="nombre"> {{places}}</span>
+    <br/>
+       <span class="text">Accessibilité PMR :</span><span class="nombre"> {{place_pmr}}</span>
+    <br/>
+    </p>
+    
+    <br/>
+    <br/>
+    
+    <p class="source">Source : GéoBretagne, 2020</p>
+    
+    </center>
+    
+</li>
+
+{{/features}}

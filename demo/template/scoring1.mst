@@ -1,0 +1,147 @@
+{{#features}}
+<li class="item">
+
+    <style>
+    .nombre {
+         color : #74C7D2 ;
+        font-size : 20px ;
+        font-weight: bold
+    }
+    .text {
+        color : #4C6DB3 ;
+        font-size : 14px ;
+    }
+    .titre {
+         color : #4C6DB3 ;
+        font-size : 30px ;
+        font-weight: bold
+    }
+    .soustitre {
+        color : #a2a2a2 ;
+        font-size : 10px ;
+        font-weight : lighter
+    }
+    .soustitre2 {
+        color : #a2a2a2 ;
+        font-size : 15px ;
+        font-weight : bold
+    }
+    .source {
+        color : #a2a2a2 ;
+        font-size : 9px ;
+        font-style: italic
+    }
+    .left { 
+        width:20%;
+        float:left; 
+        margin:3px 20px 0 10px; 
+    }
+    .br1 {
+        content: "";
+        display: block;
+        margin-bottom: 10%;
+    }
+
+    </style>
+    
+    <br>
+    
+    <center>
+    
+    <p>
+    <span class="titre">  {{NOM_COM_M}}</span>
+    </p>
+    
+    <img src="img/pictos/promotion.png" style="width:60%;">
+    
+    <div class="br1">
+    </div>
+    
+    <p>
+    <span class="text">Score :</span><span class="nombre"> {{Scoring1}}</span>
+    </p>
+    
+    <hr>
+    
+    <span class="soustitre2">Détail du scoring :</span>
+    
+    </center>
+    
+    <div class="br1">
+    </div>
+    
+    <div>
+    <img src="img/pictos/actifs.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{TxActif}}% </span> <span class="text">de la population entre 15 et 64 ans est active</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : 30%</span>
+    <div class="br1">
+    </div>
+    </div>
+
+    <div>
+    <img src="img/pictos/covoit1.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{NbrCovoit}} </span> <span class="text">trajets en covoiturage courte-distance entre novembre 2019 et janvier 2020</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : 15%</span>
+    <div class="br1">
+    </div>
+    </div>
+
+    <div>
+    <img src="img/pictos/bouchon.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{DepVoiture}}% </span> <span class="text">des déplacements se font en voiture</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : 20%</span>
+    <div class="br1">
+    </div>
+    </div>
+
+    <div>
+    <img src="img/pictos/distance.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{DistDT}} km </span> <span class="text">en moyenne entre le domicile et le lieu de travail</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : 15%</span>
+    <div class="br1">
+    </div>
+    </div>
+
+    <div>
+    <img src="img/pictos/tc.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{NbrTC}} </span> <span class="text">arrêt(s) de transport en commun</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : 15%</span>
+    <div class="br1">
+    </div>
+    </div>
+
+    <div>
+    <img src="img/pictos/aires.png" class="left">
+    <p style="margin:0px 0px 0px 80px!important;">
+    <span class="nombre">  {{NbrAireC}} </span> <span class="text">aire(s) de covoiturage</span>
+    </p>
+    <span class="soustitre">Poids dans la pondération du scoring : 5%</span>
+    <div class="br1">
+    </div>
+    </div>
+    
+    <center>
+    
+    <div class="br1">
+    </div>
+    <div class="br1">
+    </div>
+    
+    <p>
+    <span class="source">Sources : Insee, GéoBretagne, Registre de preuve du covoiturage</span>
+    </p>
+    
+    </center>
+    
+</li>
+{{/features}}
